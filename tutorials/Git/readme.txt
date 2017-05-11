@@ -35,8 +35,10 @@ git commit -m"<any message>" <folder name|file name>
 
 --then push data to git cloud repository
 
-git push origin
+git push origin 
 
+or 
 
+git push origin master
 
 
