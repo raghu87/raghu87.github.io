@@ -41,4 +41,6 @@ or
 
 git push origin master
 
+--to update the changes made in browser to system try
 
+git pull
