@@ -1,5 +1,7 @@
 # Installing Apache, PHP, and MySQL on Mac OS X
 
+https://jason.pureconcepts.net/2012/10/install-apache-php-mysql-mac-os-x/
+
 ![Mac Logo](https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Apple_logo_black.svg/170px-Apple_logo_black.svg.png)
 
 ##### First, open Terminal and switch to root to avoid permission issues while running these commands.
