@@ -13,4 +13,11 @@ Here there are some youtube talk about javascript:
   --- https://www.youtube.com/watch?v=e-5obm1G_FY
   ---http://2017.jsconf.eu/speakers/anjana-vakil-immutable-data-structures-for-functional-js.html
 
+
+3) Talk by Kyle Simpsons: What the... JavaScript?
+
+  --- https://www.youtube.com/watch?v=2pL28CcEijU#t=1646.011579
+
+  
+
   
