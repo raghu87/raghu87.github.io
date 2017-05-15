@@ -76,8 +76,7 @@
 
 	apachectl restart
 	
-###### In order to access, you need to edit your hosts file.
-	http://jason.local
+###### In order to access, http://jason.local you need to edit your hosts file.
 
 	vi /etc/hosts
 
@@ -92,3 +91,15 @@
 ###### Now you can access http://jason.local.
 
 ###### Note: You will need to create a new VirtualHost and edit your hosts file each time you make a new local site.
+
+###### A note about permissions
+###### You may receive 403 Forbidden when you visit your local site. This is likely a permissions issue. Simply put, the Apache user (_www) needs to have access to read, and sometimes write, your web directory.
+
+###### If you are not familiar with permissions, read more. For now though, the easiest thing to do is ensure your web directory has permissions of 755. You can change permissions with the command:
+
+	chmod 755 some_directory/
+
+###### In my case, all my files were under my local ~/Documents directory. Which by default is only readable by me. So I had to change permissions for my web directory all the way up to ~/Documents to resolve the 403 Forbidden issue.
+
+###### Note: There are many ways to solve permission issues. I have provided this as the easiest solution, not the best.
+
