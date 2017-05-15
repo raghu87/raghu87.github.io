@@ -1,4 +1,4 @@
---Installation
+# Installation
 The git version control system is installed with the following command
 
 sudo apt install git
