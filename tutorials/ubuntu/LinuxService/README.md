@@ -5,6 +5,7 @@
 ##### https://wiki.archlinux.org/index.php/Systemd
 ##### https://wiki.ubuntu.com/SystemdForUpstartUsers
 ##### https://blog.frd.mn/how-to-set-up-proper-startstop-services-ubuntu-debian-mac-windows/
+##### http://upstart.ubuntu.com/cookbook/
 
 ## example to write the service
 
@@ -44,7 +45,39 @@ to stop and kill service
 	sudo systemctl stop example
 	sudo systemctl kill example
 
+## Option 2 to work on upstart linux service - this is optional
+
+check example below but you can finish job of service with above service systemd method:
+
 	
+	description "node.js server"
+        author      "Foo Bar"
+        
+        # used to be: start on startup
+        # until we found some mounts weren't ready yet while booting
+        
+        start on started mountall
+        stop on shutdown
+        
+        # automatically respawn
+        
+        respawn
+        respawn limit 1 1
+        #respawn limit unlimited
+        
+        script
+            
+            export HOME="/home/jason"
+            exec sudo -u jason /usr/bin/node /home/jason/Documents/nodeservice.js >> /var/log/node.log 2>&1
+        
+        end script
+        
+        post-start script
+           
+           # optionally put a script here that will notifiy you node has (re)started
+           # /root/bin/hoptoad.sh "node.js has started!"
+           
+        end script
 
 
 
