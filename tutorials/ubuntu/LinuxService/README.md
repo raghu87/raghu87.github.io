@@ -1,0 +1,50 @@
+# HOW TO SET UP PROPER START/STOP SERVICES IN LINUX USING (UPSTART / SYSTEMD)
+
+#### Example Link Might help:-
+##### https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/System_Administrators_Guide/sect-Managing_Services_with_systemd-Unit_Files.html
+##### https://wiki.archlinux.org/index.php/Systemd
+##### https://wiki.ubuntu.com/SystemdForUpstartUsers
+##### https://blog.frd.mn/how-to-set-up-proper-startstop-services-ubuntu-debian-mac-windows/
+
+## example to write the service
+
+### go to path 
+
+	cd /lib/systemd/system/
+	sudo gvim example.service
+	 
+### paste this code
+	
+	[Unit]
+        Description=Job that runs the node daemon
+        
+        [Service]
+        Group=jason
+        User=jason
+        Type=forking
+        Restart=always
+        RestartSec=30
+        Environment=HOME=/home/jason
+        ExecStart=/usr/bin/node /home/jason/Documents/nodetest.js
+        
+        [Install]
+        WantedBy=multi-user.target
+
+## Steps to Start Service:
+	sudo systemctl --help
+	sudo systemctl status <name of the service> 
+
+ie: if you have service name called "example.service"
+
+	sudo systemctl enable example
+	sudo systemctl start example
+
+to stop and kill service
+	sudo systemctl stop example
+	sudo systemctl kill example
+
+	
+
+
+
+
