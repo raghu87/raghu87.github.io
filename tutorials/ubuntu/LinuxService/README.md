@@ -40,6 +40,7 @@ ie: if you have service name called "example.service"
 	sudo systemctl start example
 
 to stop and kill service
+
 	sudo systemctl stop example
 	sudo systemctl kill example
 
