@@ -50,6 +50,8 @@ to stop and kill service
 
 check example below but you can finish job of service with above service systemd method:
 
+	cd /etc/init/
+	sudo gvim example.conf
 	
 	description "node.js server"
         author      "Foo Bar"
