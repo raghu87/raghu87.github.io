@@ -21,13 +21,13 @@
         Description=Job that runs the node daemon
         
         [Service]
-        Group=jason
-        User=jason
+        Group=tommy
+        User=tommy
         Type=forking
         Restart=always
         RestartSec=30
-        Environment=HOME=/home/jason
-        ExecStart=/usr/bin/node /home/jason/Documents/nodetest.js
+        Environment=HOME=/home/tommy
+        ExecStart=/usr/bin/node /home/tommy/Documents/nodetest.js
         
         [Install]
         WantedBy=multi-user.target
@@ -43,6 +43,7 @@ ie: if you have service name called "example.service"
 
 to stop and kill service
 
+	sudo systemctl disable example
 	sudo systemctl stop example
 	sudo systemctl kill example
 
@@ -70,8 +71,8 @@ check example below but you can finish job of service with above service systemd
         
         script
             
-            export HOME="/home/jason"
-            exec sudo -u jason /usr/bin/node /home/jason/Documents/nodeservice.js >> /var/log/node.log 2>&1
+            export HOME="/home/tommy"
+            exec sudo -u tommy /usr/bin/node /home/tommy/Documents/nodeservice.js >> /var/log/node.log 2>&1
         
         end script
         
