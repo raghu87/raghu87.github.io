@@ -6,6 +6,7 @@
 ##### https://wiki.ubuntu.com/SystemdForUpstartUsers
 ##### https://blog.frd.mn/how-to-set-up-proper-startstop-services-ubuntu-debian-mac-windows/
 ##### http://upstart.ubuntu.com/cookbook/
+##### https://www.digitalocean.com/community/tutorials/the-upstart-event-system-what-it-is-and-how-to-use-it
 
 ## example to write the service
 
