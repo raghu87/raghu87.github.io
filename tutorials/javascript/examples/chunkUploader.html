@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>File Chunk Reader</title>
+</head>
+<body>
+  <input type="file" id="selectFiles" class="input-drop" value="Import" multiple accept=".las,.laz,.csv,.xmp,.xyz,.pts,.ply"/>
+  <script>
+    if(typeof(droidnav) == 'undefined') { var droidnav = {}; }
+    
+    droidnav._chunkUploader = function () {
+      var that = this;
+      var selectFiles = document.getElementById('selectFiles');
+      selectFiles.addEventListener("click", function () {
+        this.value = '';
+      });
+      selectFiles.addEventListener("change", function () {
+        that.processFiles(this); 
+      });
+    }
+
+    droidnav._chunkUploader.prototype.parseFile = function(file, callback, uploadDone) {
+      var that = this;
+      var fileSize   = file.size;
+      var chunkSize  = 64 * 1024; // bytes
+      var offset     = 0;
+      var self       = this; // we need a reference to the current object
+      var chunkReaderBlock = null;
+      
+      var readEventHandler = function(evt) {
+        if (evt.target.error == null) {
+          offset += evt.target.result.length;
+          //if(callback(evt.target.result)) { // callback for handling read chunk
+          //  chunkReaderBlock(offset, chunkSize, file);
+          //}
+          (function () {
+            var noffset = offset;
+            var nchunkSize = chunkSize;
+            var nfile = file;
+            var tfileSize = fileSize;
+            callback(evt,function () {
+              if (noffset >= tfileSize) {
+                if(uploadDone) uploadDone();
+                return;
+              }
+              chunkReaderBlock(noffset, nchunkSize, nfile);
+            });
+          })();
+        } else {
+          console.log("Read error: " + evt.target.error);
+          return;
+        }
+        //if (offset >= fileSize) {
+        //  //console.log("Done reading file",evt);
+        //  //that.uploadDone();
+        //  if(uploadDone) uploadDone();
+        //  //alert('done reading');
+        //  return;
+        //}
+        
+        // of to the next chunk
+        //chunkReaderBlock(offset, chunkSize, file);
+      }
+      
+      chunkReaderBlock = function(_offset, length, _file) {
+        //console.log('inside chunkRaderBlock ',_offset,length,_file);
+        var r = new FileReader();
+        var blob = _file.slice(_offset, length + _offset);
+        r.onload = readEventHandler;
+        r.readAsText(blob);
+      }
+      
+      // now let's start the read with the first block
+      chunkReaderBlock(offset, chunkSize, file);
+    }
+    
+    droidnav._chunkUploader.prototype.processFiles = function (dom) {
+      var that = this;    
+      var files = dom.files;
+      for (var i = 0; i < files.length; i++){    
+        (function () {
+          var file = files[i];
+          var chunkIdx = 1;
+          var uploadedFile = "";
+          that.parseFile(file,function (opt,cb) {
+            if(opt.target.result.trim() != "" && typeof(opt.target.result) !='undefined') {
+              uploadedFile+=opt.target.result;
+            }
+            if(cb) cb();
+            return true; 
+          },function () {
+            console.log("Done reading file");
+            console.log(uploadedFile);
+          });
+        }());
+      }
+    }
+
+    window.onload = function () {
+      droidnav.chunkUploader = new droidnav._chunkUploader();
+    }
+
+  </script>
+</body>
+</html>
