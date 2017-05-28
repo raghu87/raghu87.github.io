@@ -1,5 +1,6 @@
-how to activate call forwarding Airtel, vodafone, idea, JIO
-November 10, 2016
+#how to activate call forwarding Airtel, vodafone, idea, JIO
+http://theonlineking.com/call-divert/
+#### November 10, 2016
 Here I have written about how to activate deactivate call divert,call forwarding, call waiting on airtel call forwarding codes prepaid and postpaid.
 
 presently in airtel call forwarding for specific numbers not yet available but you can divert all calls to another mobile number.
