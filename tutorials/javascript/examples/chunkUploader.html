@@ -2,10 +2,205 @@
 <html>
 <head>
   <title>File Chunk Reader</title>
+  <link rel="shortcut icon" href="images/droidnav_icon.ico">
+  <link rel="icon" type="image/ico" href="images/droidnav_icon.ico">
+  <link rel="stylesheet" type="text/css" href="css/bootstrap-3.3.7.min.css">
+  <style type="text/css">
+    html, body {
+      width:100%;
+      height:100%;
+      margin:auto;
+    }
+
+    div.curtain {
+      left:0px;
+      top:0px;
+      /*z-index:80000;*/ /* may have some side effects*/
+      z-index:9994;
+      position:absolute; 
+      background-color:white;
+      opacity:0.7;
+      filter:alpha(opacity=70);
+    }
+
+    .droidnav-loading {
+      width: 100%;
+      height: 100%;
+      margin: auto;
+      position: absolute;
+      z-index: -1;
+      color: #666;
+      top: 0px;
+      bottom: 0px;
+      left: 0px;
+      right: 0px;
+    }
+    
+    #fountainTextG{
+        width: 160px;
+      height: 50px;
+      top: 0px;
+      bottom: 0px;
+      left: 0px;
+      right: 0px;
+      margin: auto;
+      position: absolute;
+    }
+    
+    .fountainTextG{
+      color:rgb(0,0,0);
+      font-family:Arial;
+      font-size:41px;
+      text-decoration:none;
+      font-weight:normal;
+      font-style:normal;
+      float:left;
+      animation-name:bounce_fountainTextG;
+        -o-animation-name:bounce_fountainTextG;
+        -ms-animation-name:bounce_fountainTextG;
+        -webkit-animation-name:bounce_fountainTextG;
+        -moz-animation-name:bounce_fountainTextG;
+      animation-duration:2.09s;
+        -o-animation-duration:2.09s;
+        -ms-animation-duration:2.09s;
+        -webkit-animation-duration:2.09s;
+        -moz-animation-duration:2.09s;
+      animation-iteration-count:infinite;
+        -o-animation-iteration-count:infinite;
+        -ms-animation-iteration-count:infinite;
+        -webkit-animation-iteration-count:infinite;
+        -moz-animation-iteration-count:infinite;
+      animation-direction:normal;
+        -o-animation-direction:normal;
+        -ms-animation-direction:normal;
+        -webkit-animation-direction:normal;
+        -moz-animation-direction:normal;
+      transform:scale(.5);
+        -o-transform:scale(.5);
+        -ms-transform:scale(.5);
+        -webkit-transform:scale(.5);
+        -moz-transform:scale(.5);
+    }#fountainTextG_1{
+      animation-delay:0.75s;
+        -o-animation-delay:0.75s;
+        -ms-animation-delay:0.75s;
+        -webkit-animation-delay:0.75s;
+        -moz-animation-delay:0.75s;
+    }
+    #fountainTextG_2{
+      animation-delay:0.9s;
+        -o-animation-delay:0.9s;
+        -ms-animation-delay:0.9s;
+        -webkit-animation-delay:0.9s;
+        -moz-animation-delay:0.9s;
+    }
+    #fountainTextG_3{
+      animation-delay:1.05s;
+        -o-animation-delay:1.05s;
+        -ms-animation-delay:1.05s;
+        -webkit-animation-delay:1.05s;
+        -moz-animation-delay:1.05s;
+    }
+    #fountainTextG_4{
+      animation-delay:1.2s;
+        -o-animation-delay:1.2s;
+        -ms-animation-delay:1.2s;
+        -webkit-animation-delay:1.2s;
+        -moz-animation-delay:1.2s;
+    }
+    #fountainTextG_5{
+      animation-delay:1.35s;
+        -o-animation-delay:1.35s;
+        -ms-animation-delay:1.35s;
+        -webkit-animation-delay:1.35s;
+        -moz-animation-delay:1.35s;
+    }
+    #fountainTextG_6{
+      animation-delay:1.5s;
+        -o-animation-delay:1.5s;
+        -ms-animation-delay:1.5s;
+        -webkit-animation-delay:1.5s;
+        -moz-animation-delay:1.5s;
+    }
+    #fountainTextG_7{
+      animation-delay:1.64s;
+        -o-animation-delay:1.64s;
+        -ms-animation-delay:1.64s;
+        -webkit-animation-delay:1.64s;
+        -moz-animation-delay:1.64s;
+    }
+    
+    @keyframes bounce_fountainTextG{
+      0%{
+        transform:scale(1);
+        color:rgb(0,0,0);
+      }
+    
+      100%{
+        transform:scale(.5);
+        color:rgb(255,255,255);
+      }
+    }
+    
+    @-o-keyframes bounce_fountainTextG{
+      0%{
+        -o-transform:scale(1);
+        color:rgb(0,0,0);
+      }
+    
+      100%{
+        -o-transform:scale(.5);
+        color:rgb(255,255,255);
+      }
+    }
+    
+    @-ms-keyframes bounce_fountainTextG{
+      0%{
+        -ms-transform:scale(1);
+        color:rgb(0,0,0);
+      }
+    
+      100%{
+        -ms-transform:scale(.5);
+        color:rgb(255,255,255);
+      }
+    }
+    
+    @-webkit-keyframes bounce_fountainTextG{
+      0%{
+        -webkit-transform:scale(1);
+        color:rgb(0,0,0);
+      }
+    
+      100%{
+        -webkit-transform:scale(.5);
+        color:rgb(255,255,255);
+      }
+    }
+    
+    @-moz-keyframes bounce_fountainTextG{
+      0%{
+        -moz-transform:scale(1);
+        color:rgb(0,0,0);
+      }
+    
+      100%{
+        -moz-transform:scale(.5);
+        color:rgb(255,255,255);
+      }
+    }
+  </style>
 </head>
 <body>
-  <input type="file" id="selectFiles" class="input-drop" value="Import" multiple accept=".las,.laz,.csv,.xmp,.xyz,.pts,.ply"/>
-  <script>
+  <input type="file" id="selectFiles" class="input-drop" value="Import" multiple accept=".xls,.csv,.xlsx,.txt"/>
+  <input type="file" id="selectAjaxFiles" class="input-drop" value="Import" multiple accept=".xls,.csv,.xlsx,.txt"/>
+  <input type="text" name="" id="dateStrPath">
+  <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="js/jquery-migrate-3.0.0.min.js"></script>
+  <script type="text/javascript" src="js/jquery-ui-1.12.1.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap-3.3.7.min.js"></script>
+  <script type="text/javascript" src="js/angular-1.6.4.min.js"></script>
+  <script type="text/javascript">
     if(typeof(droidnav) == 'undefined') { var droidnav = {}; }
     
     droidnav._chunkUploader = function () {
@@ -17,8 +212,14 @@
       selectFiles.addEventListener("change", function () {
         that.processFiles(this); 
       });
+      var selectAjaxFiles = document.getElementById('selectAjaxFiles');
+      selectAjaxFiles.addEventListener("click", function () {
+        this.value = '';
+      });
+      selectAjaxFiles.addEventListener("change", function () {
+        that.handlePcdUpload(this); 
+      });
     }
-
     droidnav._chunkUploader.prototype.parseFile = function(file, callback, uploadDone) {
       var that = this;
       var fileSize   = file.size;
@@ -96,10 +297,219 @@
       }
     }
 
+    droidnav._chunkUploader.prototype.handlePcdUpload = function (dom) {
+      this.drapeSheer('handlePcdUpload','100%','100%');
+      console.log(dom);  
+      var files = dom.files;
+      console.log(files);
+      // There should be csv file
+      // csv file should have name corresponding downloaded csv (date specific names)
+      // Walk through the csv rows and check if all the images and its corresponding xmp file
+      // Check if pts file, ply, xyz, las laz file all or some should be there
+      // Initiate upload only when everything is ready
+      // while uploading - we need to do xyz calculation, Georeferencing
+      // Means take CSV lat long, walk through xmp and decide lla of each point
+      // If size is bigger, do stream upload
+      // We need to write backend for recieving upload
+      
+      var dateStr = $('#dateStrPath').val();
+      if(dateStr == '') {
+        alert('enter dateString');
+        this.undrapeSheer('handlePcdUpload');
+        return;
+      }
+      var validatedFiles = [];
+      var fileTypes = {
+        'txt': {
+          files:1
+          ,name:'datasheet'
+          ,foundFiles:0
+        }
+        /*,'csv': {
+          files:1
+          ,name:'datasheet'
+          ,foundFiles:0
+        }
+        ,'xls': {
+          files:2
+          ,name:'datasheet1|datasheet2'
+          ,foundFiles:0
+        }
+        ,'xlsx': {
+          files:1
+          ,name:'datasheet3'
+          ,foundFiles:0
+        }*/
+      };
+      for (var i = 0; i < files.length; i++){    
+        var extension = files[i].name.split('.').pop().toLowerCase();
+        var fName = files[i].name.split('.').shift().toLowerCase();
+        if(fileTypes[extension]) {
+          var spName = fileTypes[extension]['name'].split('|');
+          for(var j in spName) {
+            if(spName[j].toLowerCase() === fName.toLowerCase()) {
+              validatedFiles.push(files[i]);
+              fileTypes[extension]['foundFiles']++; 
+            }
+          }
+        }
+      }
+      for(var i in fileTypes) {
+        for(var j in fileTypes[i]) {
+          if(fileTypes[i]['foundFiles'] == fileTypes[i]['files']) {
+            continue;
+          } else {
+            this.undrapeSheer('handlePcdUpload');
+            alert('not all files are matching');
+            return;
+          }
+        }
+      }
+      console.log(validatedFiles);
+      alert('all files found'); 
+      
+      //var fileTypes = ['csv', 'imagelist', 'ply', 'rcInfo', '7z', 'las', 'xyz','rcbox'];
+      var that = this;
+      this.filesLengthCount = validatedFiles.length;
+      this.uploadDoneCount = 1;
+      for (var i = 0; i < validatedFiles.length; i++){    
+        (function () {      
+          var file = validatedFiles[i];
+          //var extension = file.name.split('.').pop().toLowerCase();
+          //var isSuccess = fileTypes.indexOf(extension) > -1;
+          //console.log(extension,isSuccess);
+          var chunkIdx = 1;
+          //if (isSuccess) {
+            var uploadedFile = "";
+            //console.log(file);      
+            that.parseFile(file,function (result,cb) {
+              contentType = '';
+              var nFileName = chunkIdx+'_'+file.name;
+              //var nFileName = file.name;
+              var blob = new Blob([result.target.result], { type: contentType });
+              var file1 = new File([blob], nFileName, {type: contentType, lastModified: Date.now()});
+              var formData = new FormData();
+              var url = 'vs/buildWayWrap.php'
+              formData.append('action', 'uploadFile');
+              formData.append('i', 'file');
+              formData.append('gazeTracks', 1);
+              formData.append('dateStr', dateStr);//'120414-T1');
+              formData.append('chunkIdx', chunkIdx);
+              formData.append('city', 'bangalore');
+              formData.append('user', 'gaze');
+              formData.append('file', file1);
+              formData.append('fileName', file.name);
+              $.ajax({url: url,
+                data: formData,
+                type: 'POST',
+                contentType: false,//"multipart/form-data",
+                mimeType: "application/octet-stream",
+                processData: false,
+                success: function(res) {
+                  if(typeof(res) == 'string') res = JSON.parse(res);
+                  //console.log('success',res);                
+                  //return true;
+                  if(res.status && res.status.match(/Upload successful/gi)) {
+                    chunkIdx++;
+                    if(cb) cb();
+                  }
+                }
+              });
+              return false;
+
+            },function () {
+              if(that.filesLengthCount == that.uploadDoneCount) {
+                console.log("Done reading file");
+                alert('All Upload is Done');
+                that.undrapeSheer('handlePcdUpload');
+              } else {
+                that.uploadDoneCount++;
+              }
+              //alert('All Files Uploaded');
+              //that.uploadDone(file,uploadedFile);
+            });
+          //}
+        }());
+      }
+
+      //var str= finalStr, arr= new Uint8Array(str.length);
+      //str.split("").forEach(function(a,b){
+      //  arr[b]=a.charCodeAt();
+      //});
+      //download( arr, fileName, "text/plain" );  
+    }
+
+    droidnav._chunkUploader.prototype.drapeSheer = function ( popName, width, height, appendTo ) {
+      appendTo = appendTo || 'body';
+      var pName = 'bgCurtain';
+      //var bgCurtain = '<div id = "'+pName+'" class="curtain"></div>';
+      var bgCurtain = '<div id = "'+pName+'" class="curtain">';
+      bgCurtain += '<div id="droidnav-loading" class="droidnav-loading">';
+      bgCurtain += '<div id="fountainTextG"><div id="fountainTextG_1" class="fountainTextG">L</div><div id="fountainTextG_2" class="fountainTextG">o</div><div id="fountainTextG_3" class="fountainTextG">a</div><div id="fountainTextG_4" class="fountainTextG">d</div><div id="fountainTextG_5" class="fountainTextG">i</div><div id="fountainTextG_6" class="fountainTextG">n</div><div id="fountainTextG_7" class="fountainTextG">g</div></div>';
+      bgCurtain += '</div>';
+      if( popName == 'loader' ) {
+        appendTo = '#fvtDiv'; //TBD: this as parameter
+        width = '100%';
+        height = '100%';
+        bgCurtain = '<div id = "'+pName+'" class="curtain '+pName+'-loader">'+
+                        '<img src="images/ajax-loader_white.gif" alt="Loading..." style="position:absolute;" >'+
+                      '</div>';
+      }
+      if ($("#"+pName).length != 0) { 
+        var curtainDepth = $("#"+pName).data('curtainDepth');
+        curtainDepth[popName] = 1;
+        $("#"+pName).data('curtainDepth',curtainDepth);
+        return;
+      }
+      var con = $(bgCurtain).appendTo( appendTo );
+      var curtainDepth = {};
+      curtainDepth[popName] = 1;
+      con.data('curtainDepth',curtainDepth);
+      //con.height($(window).height());
+      //con.width($(window).width());
+      //con.css({height:'100%',width:'100%'});
+      //con.css({height:$(document).height()+'px',width:$(document).width()+'px'});
+      if (self.navigator.userAgent.match(/MSIE\s[7]/)){
+        // Screen height does not seem to be right to thing to do
+        // However we need be careful with legacy before we change
+        // 
+        //con.css({height:($(document).height()-21)+'px',width:$(document).width()+'px'});
+        width =  width || '100%';
+        height = height || '100%';
+      } else {
+        //screen height giving scrolls, safer bet is to provide my own height and width. If not present then fallback to legacy.
+        //width = width || (screen.width+'px');
+        //height = height || (screen.height+'px');
+            
+        //Lets take risk and use document instead of screen
+        
+        width = width || ($(document).width()+'px');
+        height = height || ($(document).height()+'px');    
+      }
+      con.css({height:height,width:width});
+    }
+
+    droidnav._chunkUploader.prototype.undrapeSheer = function (popName) {
+      var pName = 'bgCurtain';
+      if ($("#"+pName).length == 0) { return; } 
+      var curtainDepth = $("#"+pName).data('curtainDepth');
+      if (typeof(curtainDepth[popName]) == 'undefined') { return; }
+      delete curtainDepth[popName];
+      
+      if (this.isObjectEmpty(curtainDepth)) { $("#"+pName).hide('slow',function () { $(this).remove(); }); }
+      else $("#"+pName).data('curtainDepth',curtainDepth);
+    }
+
+    droidnav._chunkUploader.prototype.isObjectEmpty = function (obj) {
+      for(var prop in obj) {
+        if(obj.hasOwnProperty(prop)) return false; 
+      }
+      return true;
+    }
+
     window.onload = function () {
       droidnav.chunkUploader = new droidnav._chunkUploader();
     }
-
   </script>
 </body>
 </html>
