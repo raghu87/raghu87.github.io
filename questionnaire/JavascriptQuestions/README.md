@@ -115,17 +115,32 @@ eg: console.log(~-2) // 1
     console.log(~-0) // -1
 
 > to truncate the number
+
 ~~1.234234
+
 1
 
 ~~234324.234234
+
 234324
 
 Math.trunc(1.23423)
+
 1
 
 Math.floor(1.23423)
+
 1
+
+> for(;;) {} = for(;true;) = while(true) {} // infinite loop
+
+> ![] //false
+
+> !![] //true
+
+> []["filter"]['constructor']( "alert('1')" )() 
+
+gives alert
 
 > 
  
