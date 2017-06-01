@@ -35,49 +35,65 @@ window.onload and document.ready
 ans: JScript is a script language from Microsoft that is expressly designed for use within Web pages. It adheres to the ECMAScript standard and is basically Microsoft's equivalent to Netscape's earlier and more widely used JavaScript.
 
 > Math.max()
+
 -Infinity
 
 > Math.min()
+
 Infinity
 
 > [1,2,3] === [1,2,3]
+
 false
 
 > [1,2,3] == [1,2,3]
+
 false
 
 > typeof(NaN)
+
 "number"
 
 > var foo1 = 2/'bar'; console.log(foo1);
+
 NaN
 
 > 0/0
+
 NaN
 
 > Math.sqrt(-9)
+
 NaN
 
 > NaN === NaN
+
 false
 
 > NaN !== NaN
+
 true
 
 > Javascript is lexicographical sorting ie: dictionary or telephone book not numerical order
 Eg: 
 1) myArray = [33,2,98,25,4]; myArray.sort();
+
 [2, 25, 33, 4, 98]
 
 2) colors = ['red','blue']; colors.sort();
+
 ["blue", "red"]
 
 3) numbers = [80,9]; numbers.sort()
+
 [80, 9]
 
 > The codePointAt() method returns a non-negative integer that is the Unicode code point value.
+
 Eg: 
+
 'ABC'.codePointAt(1);          // 66
+
 '\uD800\uDC00'.codePointAt(0); // 65536
 
 'XYZ'.codePointAt(42); // undefined
