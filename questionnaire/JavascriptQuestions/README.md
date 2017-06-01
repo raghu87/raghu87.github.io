@@ -83,23 +83,31 @@ Eg:
 'XYZ'.codePointAt(42); // undefined
 
 > Spidermonkey of firefox uses sort algorithm such as merge sort, insertion sort
+
   where as vschrome uses quick sort and insertion sort
 
 > (Numerical sort) myArray = [33,2,98,25,4]; myArray.sort((a,b)=>a-b);
+
 [2, 4, 25, 33, 98]
 
 > ~ Means bitwise not operator
+
 eg: console.log(~-2) // 1
+
     console.log(~-1) // 0
+
     console.log(~-0) // -1
 
 > to truncate the number
 ~~1.234234
 1
+
 ~~234324.234234
 234324
+
 Math.trunc(1.23423)
 1
+
 Math.floor(1.23423)
 1
 
