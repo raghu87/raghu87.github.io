@@ -34,3 +34,74 @@ window.onload and document.ready
 16) what is difference between javascript and jscript?
 ans: JScript is a script language from Microsoft that is expressly designed for use within Web pages. It adheres to the ECMAScript standard and is basically Microsoft's equivalent to Netscape's earlier and more widely used JavaScript.
 
+> Math.max()
+-Infinity
+
+> Math.min()
+Infinity
+
+> [1,2,3] === [1,2,3]
+false
+
+> [1,2,3] == [1,2,3]
+false
+
+> typeof(NaN)
+"number"
+
+> var foo1 = 2/'bar'; console.log(foo1);
+NaN
+
+> 0/0
+NaN
+
+> Math.sqrt(-9)
+NaN
+
+> NaN === NaN
+false
+
+> NaN !== NaN
+true
+
+> Javascript is lexicographical sorting ie: dictionary or telephone book not numerical order
+Eg: 
+1) myArray = [33,2,98,25,4]; myArray.sort();
+[2, 25, 33, 4, 98]
+
+2) colors = ['red','blue']; colors.sort();
+["blue", "red"]
+
+3) numbers = [80,9]; numbers.sort()
+[80, 9]
+
+> The codePointAt() method returns a non-negative integer that is the Unicode code point value.
+Eg: 
+'ABC'.codePointAt(1);          // 66
+'\uD800\uDC00'.codePointAt(0); // 65536
+
+'XYZ'.codePointAt(42); // undefined
+
+> Spidermonkey of firefox uses sort algorithm such as merge sort, insertion sort
+  where as vschrome uses quick sort and insertion sort
+
+> (Numerical sort) myArray = [33,2,98,25,4]; myArray.sort((a,b)=>a-b);
+[2, 4, 25, 33, 98]
+
+> ~ Means bitwise not operator
+eg: console.log(~-2) // 1
+    console.log(~-1) // 0
+    console.log(~-0) // -1
+
+> to truncate the number
+~~1.234234
+1
+~~234324.234234
+234324
+Math.trunc(1.23423)
+1
+Math.floor(1.23423)
+1
+
+> 
+ 
