@@ -44,3 +44,10 @@ git push origin master
 --to update the changes made in browser to system try
 
 git pull
+
+----------------
+Git push requires username and password
+gvim ~/.netrc 
+  machine github.com
+  login <user>
+  password <password>
