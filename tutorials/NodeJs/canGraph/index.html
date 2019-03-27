@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html>
+<head>  
+<script src="jquery-1.12.4.min.js"></script>
+<script src="canvasjs.min.js"></script>
+<script>
+if(typeof(vidteq) == 'undefined') { vidteq = {}; }
+
+//window.onload = function () {
+//var chart = new CanvasJS.Chart("chartContainer", {
+//	animationEnabled: true,
+//	theme: "light2",
+//	title:{
+//		text: "Simple Line Chart"
+//	},
+//	axisY:{
+//		includeZero: false
+//	},
+//	data: [{        
+//		type: "line",       
+//		dataPoints: [
+//			{ y: 450 },
+//			{ y: 414},
+//			//{ y: 520, indexLabel: "highest",markerColor: "red", markerType: "triangle" },
+//			{ y: 460 },
+//			{ y: 450 },
+//			{ y: 500 },
+//			{ y: 480 },
+//			{ y: 480 },
+//			//{ y: 410 , indexLabel: "lowest",markerColor: "DarkSlateGrey", markerType: "cross" },
+//			{ y: 500 },
+//			{ y: 480 },
+//			{ y: 510 }
+//		]
+//	}]
+//});
+//chart.render();
+//
+//}
+(function () {
+  vidteq.__chartContainer = function () {
+    this.init();
+  }
+  
+  vidteq.__chartContainer.prototype.init = function () {
+    var that = this;
+    if(this.canGraphTimer) clearTimeout(this.canGraphTimer);
+    this.canGraphTimer = setTimeout(function () {
+      that.processCanGraph(function () {
+        that.init();
+      }); 
+    },500);
+  }
+
+  vidteq.__chartContainer.prototype.processCanGraph = function (cb) {
+    var that = this;
+    var url = "canBusRead";
+    var data = {};
+    $.ajax({
+      type:'POST'
+      ,url:url
+      ,data:JSON.stringify(data)
+      ,datatype:'text/json'
+      ,success:function (response) {
+        console.log('success ', response);
+        //if(cb) cb();
+      }
+      ,error:function (response) {
+        console.log('error ', response);
+        //if(cb) cb();
+      }
+    });
+  }
+
+  $(document).ready(function () {
+    console.log('sdf');
+    vidteq.chartContainer = new vidteq.__chartContainer();
+  });
+  
+})();
+
+</script>
+</head>
+<body>
+<div id="chartOuterContainer"></div>
+<!--div id="chartContainer" style="height: 100px; width: 100%;"></div-->
+</body>
+</html>
