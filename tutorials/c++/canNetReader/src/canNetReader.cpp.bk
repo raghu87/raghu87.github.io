@@ -1,0 +1,60 @@
+#include <stdio.h>
+#include <iostream>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <net/if.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <sys/ioctl.h>
+
+#include <linux/can.h>
+#include <linux/can/raw.h>
+
+using namespace std;
+
+int main(int argc, char const *argv[]) {
+  cout << "Inside can net reader" << endl;
+
+  int s;
+  int nbytes;
+  struct sockaddr_can addr;
+  struct can_frame frame;
+  struct ifreq ifr;
+  
+  const char *ifname = "vcan0";
+
+  if((s = socket(PF_CAN, SOCK_RAW, CAN_RAW)) < 0) {
+    perror("Error while opening socket");
+    return -1;
+  } 
+  
+  strcpy(ifr.ifr_name, ifname);
+  ioctl(s, SIOCGIFINDEX, &ifr);
+ 
+  addr.can_family  = AF_CAN;
+  addr.can_ifindex = ifr.ifr_ifindex;
+
+  printf("%s at index %d\n", ifname, ifr.ifr_ifindex);
+
+  if(bind(s, (struct sockaddr *)&addr, sizeof(addr)) < 0) {
+    perror("Error in socket bind");
+    close(s);
+    return -2;
+  }
+
+  struct can_frame frame_rd;
+  nbytes = read(s, &frame_rd, sizeof(struct can_frame)); 
+  printf("read %x bytes\n", frame_rd.can_id);
+  printf("read %d bytes\n", frame_rd.can_dlc);
+  printf("read 1 %x bytes\n", frame_rd.data[0]);
+  printf("read 2 %x bytes\n", frame_rd.data[1]);
+  printf("read 12 %x bytes\n", frame_rd.data[3]);
+  printf("read 13 %x bytes\n", frame_rd.data[4]);
+  printf("read 3 %u bytes\n", frame_rd.data[0]);
+  printf("read 4 %u bytes\n", frame_rd.data[1]);
+  printf("read %d bytes\n", nbytes);
+
+  close(s);
+  return 0;
+}

@@ -1,0 +1,15 @@
+#!/bin/sh
+
+#cat /etc/os-release
+. /etc/os-release
+echo "NAME="$NAME
+echo "VERSION="$VERSION
+echo "ID="$ID
+echo "ID_LIKE="$ID_LIKE
+echo "PRETTY_NAME="$PRETTY_NAME
+echo "VERSION_ID="$VERSION_ID
+echo "HOME_URL="$HOME_URL
+echo "SUPPORT_URL="$SUPPORT_URL
+echo "BUG_REPORT_URL="$BUG_REPORT_URL
+echo "VERSION_CODENAME="$VERSION_CODENAME
+echo "UBUNTU_CODENAME="$UBUNTU_CODENAME

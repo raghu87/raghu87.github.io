@@ -1,0 +1,5 @@
+<launch>
+  <machine name="can_net_reader" address="localhost" />
+  <arg name="carType" default="Maruti_Eco" />
+  <node name="can_net_reader" type="can_net_reader_node" pkg="can_net_reader" args="$(arg carType)" />
+</launch>
