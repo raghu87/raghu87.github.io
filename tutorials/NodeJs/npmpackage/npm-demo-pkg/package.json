@@ -1,0 +1,14 @@
+{
+  "name": "npm-demo-pkg",
+  "version": "1.0.0",
+  "description": "hello world",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "command-line-args": "^0.0.0"
+  },
+  "author": "vidteq",
+  "license": "ISC"
+}
