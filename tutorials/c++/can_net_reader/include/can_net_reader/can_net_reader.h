@@ -71,6 +71,7 @@ class CanNetReader {
     int Init(int argc, char ** argv);
     string convBase(unsigned long v, long base);    
     int convHex2Int(string v);
+    string space2underscore(string text);
     double OBDIIDecodeEngineRPMs(int a,int b);
     double OBDIIDecodeUInt8(int a);
     

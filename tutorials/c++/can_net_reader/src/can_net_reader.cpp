@@ -56,7 +56,7 @@ int CanNetReader::Init(int argc, char ** argv) {
   struct can_frame frame;
   struct ifreq ifr;
   
-  const char *ifname = "vcan0";
+  const char *ifname = "can0";
 
   if((soc = socket(PF_CAN, SOCK_RAW, CAN_RAW)) < 0) {
     time(&t);
@@ -93,10 +93,10 @@ int CanNetReader::Init(int argc, char ** argv) {
     { "Fuel system status", { 0x01, 0x03 } },
     { "Calculated engine load", { 0x01, 0x04 } },
     { "Engine coolant temperature", { 0x01, 0x05 } },
-    { "Short term fuel trim—Bank 1", { 0x01, 0x06} },
-    { "Long term fuel trim—Bank 1", { 0x01, 0x07 } },
-    { "Short term fuel trim—Bank 2", { 0x01, 0x08} },
-    { "Long term fuel trim—Bank 2", { 0x01, 0x09 } },
+    { "Short term fuel trim - Bank 1", { 0x01, 0x06} },
+    { "Long term fuel trim - Bank 1", { 0x01, 0x07 } },
+    { "Short term fuel trim - Bank 2", { 0x01, 0x08} },
+    { "Long term fuel trim - Bank 2", { 0x01, 0x09 } },
     { "Fuel pressure (gauge pressure)", { 0x01, 0x0A } },
     { "Intake manifold absolute pressure", { 0x01, 0x0B } },
     { "Engine RPM", { 0x01, 0x0C } },
@@ -155,7 +155,7 @@ int CanNetReader::Init(int argc, char ** argv) {
     { "Monitor status this drive cycle", { 0x01, 0x41 } },
     { "Control module voltage", { 0x01, 0x42 } },
     { "Absolute load value", { 0x01, 0x43 } },
-    { "Fuel–Air commanded equivalence ratio", { 0x01, 0x44 } },
+    { "Fuel - Air commanded equivalence ratio", { 0x01, 0x44 } },
     { "Relative throttle position", { 0x01, 0x45 } },
     { "Ambient air temperature", { 0x01, 0x46 } },
     { "Absolute throttle position B", { 0x01, 0x47 } },
@@ -170,8 +170,17 @@ int CanNetReader::Init(int argc, char ** argv) {
 
   ros::init(argc, argv, "can_net_reader");
   ros::NodeHandle nh;
-  ros::Publisher canBusRPM = nh.advertise<can_net_reader::CanBusFrame>("can_bus/rpm", 100);
-  ros::Publisher canBusSpeed = nh.advertise<can_net_reader::CanBusFrame>("can_bus/speed", 100);
+  map<string,ros::Publisher> canBusStream;
+  //ros::Publisher canBusStream;
+  for(size_t i = 0; i < sizeof(OBDIIMode1Commands)/sizeof(OBDIIMode1Commands[0]); i++) {//
+    string tmptopicName(OBDIIMode1Commands[i].name);
+    string topicName (space2underscore(tmptopicName));
+    string topics = "can_bus/" + topicName;
+    //debugMsg << topicName << endl;
+    canBusStream[topicName] = nh.advertise<can_net_reader::CanBusFrame>(topics, 100);
+  }
+  //ros::Publisher canBusRPM = nh.advertise<can_net_reader::CanBusFrame>("can_bus/rpm", 100);
+  //ros::Publisher canBusSpeed = nh.advertise<can_net_reader::CanBusFrame>("can_bus/speed", 100);
   can_net_reader::CanBusFrame _canBusFrame;
   while(ros::ok) {
     struct can_frame frame_rd;
@@ -193,10 +202,16 @@ int CanNetReader::Init(int argc, char ** argv) {
       //debugMsg << timestr << " " << " read can_data_6 " << convBase(frame_rd.data[6],16) << endl;
       //debugMsg << timestr << " " << " read can_data_7 " << convBase(frame_rd.data[7],16) << endl;    
       //debugMsg << timestr << " " << " OBDIIMode1Commands " << sizeof(OBDIIMode1Commands)/sizeof(OBDIIMode1Commands[0]) << endl;    
-      for(size_t i = 0; i < sizeof(OBDIIMode1Commands)/sizeof(OBDIIMode1Commands[0]); i++) {      
+      for(size_t i = 0; i < sizeof(OBDIIMode1Commands)/sizeof(OBDIIMode1Commands[0]); i++) {
+        string tmptopicName(OBDIIMode1Commands[i].name);
+        string topicName (space2underscore(tmptopicName));
+        string topics = "can_bus/" + topicName;    
         string sRes = "0x" + convBase(frame_rd.data[2],16);
         string oRes = "0x" + convBase(OBDIIMode1Commands[i].payload[1],16);
         if(sRes == oRes && "Engine RPM" == OBDIIMode1Commands[i].name) {
+          //if(ros::service::exists("can_bus/rpm",false)) {} else {
+          //  canBusStream = nh.advertise<can_net_reader::CanBusFrame>("can_bus/rpm", 100);
+          //}          
           debugMsg << timestr << " " << " OBDIIMode1Commands " << i << " " << sRes << " " << oRes << " " << OBDIIMode1Commands[i].name << endl; 
           debugMsg << "0x" + convBase(frame_rd.data[2],16) << " " << "0x" + convBase(frame_rd.data[3],16) << " " << "0x" + convBase(frame_rd.data[4],16) << " " << "0x" + convBase(frame_rd.data[5],16) << endl;
           debugMsg << convHex2Int(convBase(frame_rd.data[3],16)) << convHex2Int(convBase(frame_rd.data[4],16)) << endl;
@@ -206,8 +221,10 @@ int CanNetReader::Init(int argc, char ** argv) {
           _canBusFrame.header.frame_id = "PCAN_USB";
           _canBusFrame.carType = carType;
           _canBusFrame.data = rpmVal;          
-          canBusRPM.publish(_canBusFrame);
+          canBusStream[topicName].publish(_canBusFrame);
+          //canBusRPM.publish(_canBusFrame);
         } else if(sRes == oRes && "Vehicle speed" == OBDIIMode1Commands[i].name) {
+          //ros::Publisher canBusSpeed = nh.advertise<can_net_reader::CanBusFrame>("can_bus/speed", 100);
           debugMsg << timestr << " " << " OBDIIMode1Commands " << i << " " << sRes << " " << oRes << " " << OBDIIMode1Commands[i].name << endl; 
           debugMsg << "0x" + convBase(frame_rd.data[2],16) << " " << "0x" + convBase(frame_rd.data[3],16) << " " << "0x" + convBase(frame_rd.data[4],16) << " " << "0x" + convBase(frame_rd.data[5],16) << endl;
           debugMsg << convHex2Int(convBase(frame_rd.data[3],16)) << endl;
@@ -216,8 +233,9 @@ int CanNetReader::Init(int argc, char ** argv) {
           _canBusFrame.header.stamp = ros::Time::now();
           _canBusFrame.header.frame_id = "PCAN_USB";
           _canBusFrame.carType = carType;
-          _canBusFrame.data = speedVal;          
-          canBusSpeed.publish(_canBusFrame);        
+          _canBusFrame.data = speedVal;
+          canBusStream[topicName].publish(_canBusFrame);        
+          //canBusSpeed.publish(_canBusFrame);        
         } else {
           continue;
         }
@@ -263,6 +281,29 @@ string CanNetReader::convBase(unsigned long v, long base) {
   }
   if(result.size() < 2) result = "0" + result;  
   return result;
+}
+
+string CanNetReader::space2underscore(string text) {
+  for(std::string::iterator it = text.begin(); it != text.end(); ++it) {
+    if(*it == ' ') {
+      *it = '_';
+    }
+    if(*it == '-') {
+      *it = '_';
+    }
+    if(*it == ',') {
+      *it = '_';
+    }
+    if(*it == '(') {
+      *it = '_';
+    }
+    if(*it == ')') {
+      *it = '_';
+    }
+  }
+  //text.erase(std::remove(text.begin(), text.end(), '_'), text.end());
+
+  return text;
 }
 
 int main(int argc, char ** argv) {  
