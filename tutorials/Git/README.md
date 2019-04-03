@@ -51,3 +51,18 @@ gvim ~/.netrc
   machine github.com
   login <user>
   password <password>
+
+
+
+
+--------------------
+git jekyll
+#for docs blogs
+https://jekyllrb.com/
+https://github.com/jekyll/jekyll/tree/master/docs
+http://jekyllthemes.org/
+https://github.com/jekyll/jekyll/wiki/themes
+
+http://inloop.github.io/sqlite-viewer/
+https://github.com/inloop/sqlite-viewer
+
