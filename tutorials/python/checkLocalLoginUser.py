@@ -1,3 +1,4 @@
 import getpass
-getpass.getuser()
-'kostya'
+
+print(getpass.getuser())
+#'kostya'
