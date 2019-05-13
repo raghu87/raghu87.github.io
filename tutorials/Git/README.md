@@ -66,3 +66,8 @@ https://github.com/jekyll/jekyll/wiki/themes
 http://inloop.github.io/sqlite-viewer/
 https://github.com/inloop/sqlite-viewer
 
+
+# .netrc file so you can push/pull to https git repos without entering your creds all the time 
+machine github.com
+login technoweenie
+password SECRET
