@@ -68,6 +68,7 @@ https://github.com/inloop/sqlite-viewer
 
 
 # .netrc file so you can push/pull to https git repos without entering your creds all the time 
-machine github.com
+`machine github.com
 login technoweenie
 password SECRET
+`
