@@ -1,1 +1,0 @@
-# Hello Welcome to Mac OS TUTORIAL

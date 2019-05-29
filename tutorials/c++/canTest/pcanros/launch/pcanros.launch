@@ -1,4 +1,0 @@
-<launch>
-  <machine name="pcanros" address="localhost" />
-  <node name="pcanros" type="pcanros" pkg="pcanros" args="" />
-</launch>

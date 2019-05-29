@@ -1,3 +1,0 @@
-/home/intel/Documents/cfg/build/CMakeFiles/rebuild_cache.dir
-/home/intel/Documents/cfg/build/CMakeFiles/edit_cache.dir
-/home/intel/Documents/cfg/build/CMakeFiles/advanced_navigation_drivertesy.dir
